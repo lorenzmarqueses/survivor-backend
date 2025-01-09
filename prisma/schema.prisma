@@ -25,6 +25,10 @@ model Survivor {
   infected    Boolean   @default(false)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+
+  tradeFrom   TradeLog[] @relation("SurvivorFrom") // Relationship for trades where the survivor is giving items
+  tradeTo     TradeLog[] @relation("SurvivorTo")   // Relationship for trades where the survivor is receiving items
+
 }
 
 model Item {
@@ -33,6 +37,8 @@ model Item {
   description String
   options     ItemType
   inventory   Inventory[]
+
+  TradeLog TradeLog[]
 }
 
 model Inventory {
@@ -43,6 +49,21 @@ model Inventory {
 
   survivor    Survivor  @relation(fields: [survivorId], references: [id])
   item        Item      @relation(fields: [itemId], references: [id])
+
+  @@unique([survivorId, itemId])  // Composite unique constraint
+}
+
+model TradeLog {
+  id           Int       @id @default(autoincrement())
+  survivorFrom Int
+  survivorTo   Int
+  itemId       Int
+  quantity     Int
+  createdAt    DateTime  @default(now())
+
+  survivorFromRel Survivor @relation("SurvivorFrom", fields: [survivorFrom], references: [id])
+  survivorToRel   Survivor @relation("SurvivorTo", fields: [survivorTo], references: [id])
+  item            Item      @relation(fields: [itemId], references: [id])
 }
 
 enum ItemType {
