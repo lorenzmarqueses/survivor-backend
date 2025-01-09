@@ -1,6 +1,7 @@
 // src/trade-log/trade-log.controller.ts
 import { Controller, Get, Post, Body } from '@nestjs/common';
 import { TradeLogService } from './trade-log.service';
+import { CreateTradeLogDto } from './dto/create-trade-log.dto';
 
 @Controller('api/trade-logs')
 export class TradeLogController {
@@ -10,12 +11,7 @@ export class TradeLogController {
   @Post()
   logTrade(
     @Body()
-    data: {
-      survivorFromId: number;
-      survivorToId: number;
-      itemId: number;
-      quantity: number;
-    },
+    data: CreateTradeLogDto,
   ) {
     return this.tradeLogService.logTrade(
       data.survivorFromId,

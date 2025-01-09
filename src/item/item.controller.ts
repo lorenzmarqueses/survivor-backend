@@ -8,20 +8,15 @@ import {
   Delete,
 } from '@nestjs/common';
 import { ItemService } from './item.service';
+import { CreateItemDto } from './dto/create-item.dto';
+import { UpdateItemDto } from './dto/update-item.dto';
 
 @Controller('api/items')
 export class ItemController {
   constructor(private readonly itemService: ItemService) {}
 
   @Post()
-  create(
-    @Body()
-    data: {
-      name: string;
-      description: string;
-      options: 'WATER' | 'FOOD' | 'MEDICATION' | 'CVIRUS_VACCINE';
-    },
-  ) {
+  create(@Body() data: CreateItemDto) {
     return this.itemService.create(data);
   }
 
@@ -39,11 +34,7 @@ export class ItemController {
   update(
     @Param('id') id: number,
     @Body()
-    data: {
-      name?: string;
-      description?: string;
-      options?: 'WATER' | 'FOOD' | 'MEDICATION' | 'CVIRUS_VACCINE';
-    },
+    data: UpdateItemDto,
   ) {
     return this.itemService.update(id, data);
   }

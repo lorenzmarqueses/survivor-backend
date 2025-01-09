@@ -8,6 +8,8 @@ import {
   Put,
 } from '@nestjs/common';
 import { SurvivorService } from './survivor.service';
+import { CreateSurvivorDto } from './dto/create-survivor.dto';
+import { UpdateSurvivorDto } from './dto/update-survivor.dto';
 
 @Controller('api/survivors')
 export class SurvivorController {
@@ -16,13 +18,7 @@ export class SurvivorController {
   @Post()
   create(
     @Body()
-    data: {
-      name: string;
-      age: number;
-      gender: string;
-      latitude: number;
-      longitude: number;
-    },
+    data: CreateSurvivorDto,
   ) {
     return this.survivorService.create(data);
   }
@@ -41,13 +37,7 @@ export class SurvivorController {
   update(
     @Param('id') id: number,
     @Body()
-    data: {
-      name?: string;
-      age?: number;
-      gender?: string;
-      latitude?: number;
-      longitude?: number;
-    },
+    data: UpdateSurvivorDto,
   ) {
     return this.survivorService.update(id, data);
   }

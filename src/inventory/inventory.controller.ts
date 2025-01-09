@@ -8,15 +8,16 @@ import {
   Delete,
 } from '@nestjs/common';
 import { InventoryService } from './inventory.service';
+import { CreateInventoryDto } from './dto/create-inventory.dto';
+import { UpdateInventoryDto } from './dto/update-inventory.dto';
+import { TradeItemsDto } from './dto/trade-items.dto';
 
 @Controller('api/inventory')
 export class InventoryController {
   constructor(private readonly inventoryService: InventoryService) {}
 
   @Post()
-  create(
-    @Body() data: { survivorId: number; itemId: number; quantity: number },
-  ) {
+  create(@Body() data: CreateInventoryDto) {
     return this.inventoryService.create(data);
   }
 
@@ -31,7 +32,7 @@ export class InventoryController {
   }
 
   @Put(':id')
-  update(@Param('id') id: number, @Body() data: { quantity?: number }) {
+  update(@Param('id') id: number, @Body() data: UpdateInventoryDto) {
     return this.inventoryService.update(id, data);
   }
 
@@ -43,12 +44,7 @@ export class InventoryController {
   @Post('trade')
   tradeItems(
     @Body()
-    data: {
-      survivorFromId: number;
-      survivorToId: number;
-      itemId: number;
-      quantity: number;
-    },
+    data: TradeItemsDto,
   ) {
     return this.inventoryService.tradeItems(
       data.survivorFromId,
