@@ -1,14 +1,13 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Param,
-  Put,
+  Controller,
   Delete,
+  Get,
+  Param,
+  Post,
+  Put,
 } from '@nestjs/common';
 import { SurvivorService } from './survivor.service';
-import { Public } from 'src/auth/public.decorator';
 
 @Controller('api/survivors')
 export class SurvivorController {

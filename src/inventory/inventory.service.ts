@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { Inventory } from '@prisma/client';
-import { TradeLogService } from 'src/trade-log/trade-log.service';
+import { TradeLogService } from '../trade-log/trade-log.service';
 
 @Injectable()
 export class InventoryService {

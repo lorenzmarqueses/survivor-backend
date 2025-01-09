@@ -13,7 +13,9 @@ export class ReportService {
     const infectedSurvivors = await this.prisma.survivor.count({
       where: { infected: true },
     });
-    return (infectedSurvivors / totalSurvivors) * 100;
+    return totalSurvivors === 0
+      ? 0
+      : (infectedSurvivors / totalSurvivors) * 100;
   }
 
   // Get percentage of non-infected survivors
@@ -22,7 +24,9 @@ export class ReportService {
     const nonInfectedSurvivors = await this.prisma.survivor.count({
       where: { infected: false },
     });
-    return (nonInfectedSurvivors / totalSurvivors) * 100;
+    return totalSurvivors === 0
+      ? 0
+      : (nonInfectedSurvivors / totalSurvivors) * 100;
   }
 
   // Get average amount of each resource by survivor
@@ -41,7 +45,10 @@ export class ReportService {
         const totalSurvivors = await this.prisma.survivor.count();
         return {
           resource,
-          average: totalResourceQuantity._sum.quantity / totalSurvivors,
+          average:
+            totalSurvivors === 0
+              ? 0
+              : totalResourceQuantity._sum.quantity / totalSurvivors,
         };
       }),
     );
