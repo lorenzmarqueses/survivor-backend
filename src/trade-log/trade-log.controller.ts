@@ -2,7 +2,7 @@
 import { Controller, Get, Post, Body } from '@nestjs/common';
 import { TradeLogService } from './trade-log.service';
 
-@Controller('trade-logs')
+@Controller('api/trade-logs')
 export class TradeLogController {
   constructor(private readonly tradeLogService: TradeLogService) {}
 

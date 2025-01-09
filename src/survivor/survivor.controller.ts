@@ -8,8 +8,9 @@ import {
   Delete,
 } from '@nestjs/common';
 import { SurvivorService } from './survivor.service';
+import { Public } from 'src/auth/public.decorator';
 
-@Controller('survivors')
+@Controller('api/survivors')
 export class SurvivorController {
   constructor(private readonly survivorService: SurvivorService) {}
 

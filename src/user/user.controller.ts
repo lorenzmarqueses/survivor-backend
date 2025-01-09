@@ -5,7 +5,7 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard'; // Import the JWT Auth Gu
 import { Public } from '../auth/public.decorator'; // Public decorator to bypass authentication
 import { Request } from 'express';
 
-@Controller('user')
+@Controller('api/users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
