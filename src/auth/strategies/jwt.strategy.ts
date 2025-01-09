@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { AuthService } from './auth.service';
 import { User } from '@prisma/client';
+import { AuthService } from '../auth.service';
 
 declare global {
   namespace Express {

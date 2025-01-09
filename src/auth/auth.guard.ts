@@ -5,11 +5,11 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { JwtStrategy } from './jwt.strategy';
-import { IS_PUBLIC_KEY } from './public.decorator';
+import { IS_PUBLIC_KEY } from './decorators/public.decorator';
+import { JwtStrategy } from './strategies/jwt.strategy';
 
 @Injectable()
-export class JwtAuthGuard implements CanActivate {
+export class AuthGuard implements CanActivate {
   constructor(
     private readonly jwtStrategy: JwtStrategy,
     private readonly reflector: Reflector,

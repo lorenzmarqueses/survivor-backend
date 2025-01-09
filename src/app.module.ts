@@ -4,8 +4,8 @@ import { JwtService } from '@nestjs/jwt';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
-import { JwtAuthGuard } from './auth/jwt-auth.guard';
-import { JwtStrategy } from './auth/jwt.strategy';
+import { AuthGuard } from './auth/auth.guard';
+import { JwtStrategy } from './auth/strategies/jwt.strategy';
 import { InventoryModule } from './inventory/inventory.module';
 import { ItemModule } from './item/item.module';
 import { ReportModule } from './report/report.module';
@@ -30,7 +30,7 @@ import { UserModule } from './user/user.module';
     JwtService,
     {
       provide: APP_GUARD,
-      useClass: JwtAuthGuard,
+      useClass: AuthGuard,
     },
   ],
 })

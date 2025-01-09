@@ -9,10 +9,7 @@ async function bootstrap() {
     .setTitle('Survivor API')
     .setDescription('The Survivor API description')
     .setVersion('1.0')
-    .addBearerAuth(
-      { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' }, // Configure Bearer JWT Authentication
-      'access_token', // The name of the token in Swagger
-    )
+    .addBearerAuth()
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory);

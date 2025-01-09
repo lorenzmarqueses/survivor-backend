@@ -1,9 +1,6 @@
 // src/user/user.controller.ts
-import { Controller, Post, Body, Get, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { UserService } from './user.service';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard'; // Import the JWT Auth Guard
-import { Public } from '../auth/public.decorator'; // Public decorator to bypass authentication
-import { Request } from 'express';
 
 @Controller('api/users')
 export class UserController {

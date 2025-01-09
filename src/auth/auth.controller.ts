@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post, Req } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { Public } from './public.decorator';
+import { Public } from './decorators/public.decorator';
 import { Request } from 'express';
 
 @Controller('api/auth')
@@ -27,6 +27,6 @@ export class AuthController {
 
   @Get('profile')
   getProfile(@Req() req: Request) {
-    return req.user; // User will be added to the request by JwtAuthGuard
+    return req.user; // User will be added to the request by AuthGuard
   }
 }
