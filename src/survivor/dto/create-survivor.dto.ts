@@ -30,4 +30,10 @@ export class CreateSurvivorDto {
     example: 13.405,
   })
   longitude: number;
+
+  @ApiProperty({
+    description: 'The health status of the survivor',
+    example: false,
+  })
+  infected: boolean;
 }
