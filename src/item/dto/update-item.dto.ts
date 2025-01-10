@@ -11,5 +11,5 @@ export class UpdateItemDto {
   description?: string;
 
   @ApiProperty({ description: 'Type of the item', example: 'WATER' })
-  options?: 'WATER' | 'FOOD' | 'MEDICATION' | 'CVIRUS_VACCINE';
+  type?: 'WATER' | 'FOOD' | 'MEDICATION' | 'CVIRUS_VACCINE';
 }

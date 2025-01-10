@@ -38,7 +38,7 @@ export class ReportService {
         const totalResourceQuantity = await this.prisma.inventory.aggregate({
           _sum: { quantity: true },
           where: {
-            item: { options: resource as ItemType },
+            item: { type: resource as ItemType },
           },
         });
 

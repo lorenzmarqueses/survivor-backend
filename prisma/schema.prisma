@@ -35,7 +35,7 @@ model Item {
   id          Int       @id @default(autoincrement())
   name        String
   description String
-  options     ItemType
+  type     ItemType
   inventory   Inventory[]
 
   TradeLog TradeLog[]

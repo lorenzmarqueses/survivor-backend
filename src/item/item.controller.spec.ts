@@ -33,7 +33,7 @@ describe('ItemController', () => {
       const data = {
         name: 'Water Bottle',
         description: 'A bottle of fresh water',
-        options: ItemType.WATER,
+        type: ItemType.WATER,
       };
       const result = { id: 1, ...data };
       jest.spyOn(itemService, 'create').mockResolvedValue(result);
@@ -49,13 +49,13 @@ describe('ItemController', () => {
           id: 1,
           name: 'Water Bottle',
           description: 'A bottle of fresh water',
-          options: ItemType.WATER,
+          type: ItemType.WATER,
         },
         {
           id: 2,
           name: 'Medkit',
           description: 'A first aid kit',
-          options: ItemType.MEDICATION,
+          type: ItemType.MEDICATION,
         },
       ];
       jest.spyOn(itemService, 'findAll').mockResolvedValue(result);
@@ -70,7 +70,7 @@ describe('ItemController', () => {
         id: 1,
         name: 'Water Bottle',
         description: 'A bottle of fresh water',
-        options: ItemType.WATER,
+        type: ItemType.WATER,
       };
       jest.spyOn(itemService, 'findOne').mockResolvedValue(result);
 
@@ -86,7 +86,7 @@ describe('ItemController', () => {
         id,
         name: 'Updated Water Bottle',
         description: 'A bottle of fresh water',
-        options: ItemType.WATER,
+        type: ItemType.WATER,
       };
       jest.spyOn(itemService, 'update').mockResolvedValue(result);
 
@@ -101,7 +101,7 @@ describe('ItemController', () => {
         id,
         name: 'Water Bottle',
         description: 'A bottle of fresh water',
-        options: ItemType.WATER,
+        type: ItemType.WATER,
       };
       jest.spyOn(itemService, 'remove').mockResolvedValue(result);
 

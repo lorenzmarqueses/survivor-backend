@@ -34,7 +34,7 @@ describe('ItemService', () => {
       const data = {
         name: 'Water',
         description: 'Clean water',
-        options: ItemType.WATER,
+        type: ItemType.WATER,
       };
       const createdItem = { id: 1, ...data };
       mockPrismaService.item.create.mockResolvedValue(createdItem);
@@ -49,7 +49,7 @@ describe('ItemService', () => {
   describe('findAll', () => {
     it('should return all items', async () => {
       const itemsList = [
-        { id: 1, name: 'Water', description: 'Clean water', options: 'WATER' },
+        { id: 1, name: 'Water', description: 'Clean water', type: 'WATER' },
       ];
       mockPrismaService.item.findMany.mockResolvedValue(itemsList);
 
@@ -66,7 +66,7 @@ describe('ItemService', () => {
         id: 1,
         name: 'Water',
         description: 'Clean water',
-        options: 'WATER',
+        type: 'WATER',
       };
       mockPrismaService.item.findUnique.mockResolvedValue(item);
 
@@ -89,7 +89,7 @@ describe('ItemService', () => {
         id: 1,
         name: 'Updated Water',
         description: 'Filtered water',
-        options: ItemType.WATER,
+        type: ItemType.WATER,
       };
       mockPrismaService.item.update.mockResolvedValue(updatedItem);
 
@@ -109,7 +109,7 @@ describe('ItemService', () => {
         id: 1,
         name: 'Water',
         description: 'Clean water',
-        options: ItemType.WATER,
+        type: ItemType.WATER,
       };
       mockPrismaService.item.delete.mockResolvedValue(deletedItem);
 
