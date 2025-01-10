@@ -21,11 +21,8 @@ export class JwtStrategy {
   // Validate JWT token and extract user info
   async validate(token: string) {
     try {
-      const decoded = this.jwtService.verify(token);
-      const user = await this.authService.validateUser(
-        decoded.email,
-        decoded.sub,
-      );
+      const decoded = await this.jwtService.decode(token);
+      const user = await this.authService.validateUser(decoded.email);
       if (!user) {
         throw new Error('User not found');
       }

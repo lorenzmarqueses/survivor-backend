@@ -42,7 +42,7 @@ describe('AuthService', () => {
       const user = { id: 1, email, password: hashedPassword };
 
       mockPrismaService.user.findUnique.mockResolvedValue(user);
-      const result = await authService.validateUser(email, password);
+      const result = await authService.validateUser(email);
 
       expect(result).toEqual(user);
       expect(mockPrismaService.user.findUnique).toHaveBeenCalledWith({
@@ -55,7 +55,7 @@ describe('AuthService', () => {
       const password = 'wrongpassword';
 
       mockPrismaService.user.findUnique.mockResolvedValue(null);
-      const result = await authService.validateUser(email, password);
+      const result = await authService.validateUser(email);
 
       expect(result).toBeNull();
       expect(mockPrismaService.user.findUnique).toHaveBeenCalledWith({

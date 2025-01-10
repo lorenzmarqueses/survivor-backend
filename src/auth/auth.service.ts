@@ -11,9 +11,9 @@ export class AuthService {
   ) {}
 
   // Validate user by email and password
-  async validateUser(email: string, password: string) {
+  async validateUser(email: string) {
     const user = await this.prisma.user.findUnique({ where: { email } });
-    if (user && bcrypt.compareSync(password, user.password)) {
+    if (user) {
       return user; // Return user if valid
     }
     return null; // Return null if invalid

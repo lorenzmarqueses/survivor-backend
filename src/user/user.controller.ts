@@ -17,6 +17,11 @@ export class UserController {
     return this.userService.create(data);
   }
 
+  @Get(':email')
+  findOne(email: string) {
+    return this.userService.findOne(email);
+  }
+
   @Get()
   findAll() {
     return this.userService.findAll();

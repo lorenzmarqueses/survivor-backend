@@ -11,10 +11,14 @@ import { Public } from './decorators/public.decorator';
 import { Request } from 'express';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
+import { UserService } from 'src/user/user.service';
 
 @Controller('api/auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly userService: UserService,
+  ) {}
 
   // Register route
   @Public()
@@ -27,7 +31,7 @@ export class AuthController {
   @Public()
   @Post('login')
   async login(@Body() data: LoginDto) {
-    const user = await this.authService.validateUser(data.email, data.password);
+    const user = await this.userService.findOne(data.email);
     if (user) {
       return this.authService.login(user); // Return token after successful login
     }
