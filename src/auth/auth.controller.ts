@@ -24,18 +24,14 @@ export class AuthController {
   @Public()
   @Post('register')
   async register(@Body() data: RegisterDto) {
-    return this.authService.register(data.email, data.password);
+    return this.authService.register(data);
   }
 
   // Login route
   @Public()
   @Post('login')
   async login(@Body() data: LoginDto) {
-    const user = await this.userService.findOne(data.email);
-    if (user) {
-      return this.authService.login(user); // Return token after successful login
-    }
-    throw new UnauthorizedException('Invalid credentials');
+    return this.authService.login(data); // Return token after successful login
   }
 
   @Get('profile')
