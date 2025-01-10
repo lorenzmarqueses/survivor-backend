@@ -1,4 +1,11 @@
-import { Body, Controller, Get, Post, Req } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Req,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Public } from './decorators/public.decorator';
 import { Request } from 'express';
@@ -24,7 +31,7 @@ export class AuthController {
     if (user) {
       return this.authService.login(user); // Return token after successful login
     }
-    throw new Error('Invalid credentials');
+    throw new UnauthorizedException('Invalid credentials');
   }
 
   @Get('profile')
