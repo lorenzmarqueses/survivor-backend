@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service'; // Prisma service
 import { Survivor } from '@prisma/client';
 import { PaginationDto } from 'src/types/pagination-dto';
-import { FindAllSurvivorsResponse } from './dto/find-all-survivor-response.dto';
+import { FindAllSurvivorsResponse } from './dto/find-all-survivors-response.dto';
 
 @Injectable()
 export class SurvivorService {
