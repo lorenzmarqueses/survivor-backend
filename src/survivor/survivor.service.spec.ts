@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { SurvivorService } from './survivor.service';
 import { PrismaService } from '../prisma.service';
+import { PaginationDto } from 'src/types/pagination-dto';
 
 describe('SurvivorService', () => {
   let survivorService: SurvivorService;
@@ -13,6 +14,7 @@ describe('SurvivorService', () => {
       findUnique: jest.fn(),
       update: jest.fn(),
       delete: jest.fn(),
+      count: jest.fn(),
     },
   };
 
@@ -61,12 +63,29 @@ describe('SurvivorService', () => {
           longitude: 139.6917,
         },
       ];
+
+      const infectedCount = 5; // Mock infected count
+      const nonInfectedCount = 10; // Mock non-infected count
+
       mockPrismaService.survivor.findMany.mockResolvedValue(survivors);
+      mockPrismaService.survivor.count.mockResolvedValueOnce(infectedCount); // Mock the infected count
+      mockPrismaService.survivor.count.mockResolvedValueOnce(nonInfectedCount); // Mock the non-infected count
 
-      const result = await survivorService.findAll();
+      const paginationDto: PaginationDto = { page: 1, limit: 10 };
+      const result = await survivorService.findAll(paginationDto);
 
-      expect(result).toEqual(survivors);
+      expect(result).toEqual({
+        data: {
+          survivors,
+          infectedCount,
+          nonInfectedCount,
+        },
+        total: infectedCount + nonInfectedCount,
+        page: paginationDto.page,
+        limit: paginationDto.limit,
+      });
       expect(mockPrismaService.survivor.findMany).toHaveBeenCalled();
+      expect(mockPrismaService.survivor.count).toHaveBeenCalledTimes(2);
     });
   });
 

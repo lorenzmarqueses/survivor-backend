@@ -46,7 +46,7 @@ export class ReportService {
         return {
           resource,
           average:
-            totalSurvivors === 0
+            totalSurvivors === 0 || !totalResourceQuantity._sum.quantity
               ? 0
               : totalResourceQuantity._sum.quantity / totalSurvivors,
         };

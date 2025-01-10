@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { SurvivorController } from './survivor.controller';
 import { SurvivorService } from './survivor.service';
 import { create } from 'domain';
+import { PaginationDto } from 'src/types/pagination-dto';
 
 describe('SurvivorController', () => {
   let survivorController: SurvivorController;
@@ -49,33 +50,44 @@ describe('SurvivorController', () => {
 
   describe('findAll', () => {
     it('should return an array of survivors', async () => {
-      const result = [
-        {
-          id: 1,
-          name: 'John Doe',
-          age: 30,
-          gender: 'Male',
-          latitude: 10.12345,
-          longitude: 20.12345,
-          infected: true,
-          createdAt: new Date(),
-          updatedAt: new Date(),
+      const result = {
+        data: {
+          survivors: [
+            {
+              id: 1,
+              name: 'John Doe',
+              age: 30,
+              gender: 'Male',
+              latitude: 10.12345,
+              longitude: 20.12345,
+              infected: true,
+              createdAt: new Date(),
+              updatedAt: new Date(),
+            },
+            {
+              id: 2,
+              name: 'Jane Doe',
+              age: 28,
+              gender: 'Female',
+              latitude: 11.12345,
+              longitude: 21.12345,
+              infected: false,
+              createdAt: new Date(),
+              updatedAt: new Date(),
+            },
+          ],
+          infectedCount: 1,
+          nonInfectedCount: 1,
         },
-        {
-          id: 2,
-          name: 'Jane Doe',
-          age: 28,
-          gender: 'Female',
-          latitude: 11.12345,
-          longitude: 21.12345,
-          infected: false,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-      ];
+        total: 2,
+        page: 1,
+        limit: 10,
+      };
       jest.spyOn(survivorService, 'findAll').mockResolvedValue(result);
 
-      expect(await survivorController.findAll()).toBe(result);
+      const page = 1;
+      const limit = 10;
+      expect(await survivorController.findAll(page, limit)).toBe(result);
     });
   });
 

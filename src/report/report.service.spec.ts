@@ -76,7 +76,7 @@ describe('ReportService', () => {
       mockPrismaService.survivor.count.mockResolvedValue(totalSurvivors);
 
       mockPrismaService.inventory.aggregate.mockImplementation(({ where }) => {
-        const resourceType = where.item.options;
+        const resourceType = where.item.type;
         const mockQuantities = {
           WATER: 50,
           FOOD: 30,

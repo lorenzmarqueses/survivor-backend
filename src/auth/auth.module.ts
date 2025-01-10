@@ -5,7 +5,7 @@ import { AuthGuard } from './auth.guard';
 import { PrismaService } from '../prisma.service';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { AuthController } from './auth.controller';
-import { UserService } from 'src/user/user.service';
+import { UserService } from '../user/user.service';
 
 @Module({
   imports: [JwtModule.register({ secret: process.env.JWT_SECRET })],

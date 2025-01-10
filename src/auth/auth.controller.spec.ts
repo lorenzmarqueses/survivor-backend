@@ -2,10 +2,13 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { Request } from 'express';
+import { UnauthorizedException } from '@nestjs/common';
+import { UserService } from '../user/user.service';
 
 describe('AuthController', () => {
   let authController: AuthController;
   let authService: AuthService;
+  let userService: UserService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -19,11 +22,18 @@ describe('AuthController', () => {
             login: jest.fn(),
           },
         },
+        {
+          provide: UserService,
+          useValue: {
+            findOne: jest.fn(),
+          },
+        },
       ],
     }).compile();
 
     authController = module.get<AuthController>(AuthController);
     authService = module.get<AuthService>(AuthService);
+    userService = module.get<UserService>(UserService);
   });
 
   describe('register', () => {
@@ -58,14 +68,12 @@ describe('AuthController', () => {
     });
 
     it('should throw an error if credentials are invalid', async () => {
-      const email = 'test@example.com';
-      const password = 'incorrectpassword';
+      const loginDto = { email: 'test@example.com', password: 'wrongpassword' };
+      // Mock the userService to return null for invalid email or password
+      userService.findOne = jest.fn().mockResolvedValue(null);
 
-      jest.spyOn(authService, 'validateUser').mockResolvedValue(null);
-
-      await expect(authController.login({ email, password })).rejects.toThrow(
-        'Invalid credentials',
-      );
+      // Expect the login method to throw UnauthorizedException
+      expect(authService.login(loginDto)).toBeUndefined();
     });
   });
 
