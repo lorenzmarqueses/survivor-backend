@@ -4,12 +4,15 @@ import {
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { SurvivorService } from './survivor.service';
 import { CreateSurvivorDto } from './dto/create-survivor.dto';
 import { UpdateSurvivorDto } from './dto/update-survivor.dto';
+import { PaginationDto } from 'src/types/pagination-dto';
 
 @Controller('api/survivors')
 export class SurvivorController {
@@ -24,8 +27,16 @@ export class SurvivorController {
   }
 
   @Get()
-  findAll() {
-    return this.survivorService.findAll();
+  async findAll(
+    @Query('page', ParseIntPipe) page: number,
+    @Query('limit', ParseIntPipe) limit: number,
+  ) {
+    const paginationDto: PaginationDto = {
+      page,
+      limit,
+    };
+
+    return this.survivorService.findAll(paginationDto);
   }
 
   @Get(':id')
