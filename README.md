@@ -29,4 +29,16 @@ To run this application using Docker, follow these steps:
   ```sh
   docker compose up
   ```
-  This command will start all the services defined in your `docker-compose.yml` file.
+This command will start all the services defined in your `docker-compose.yml` file.
+
+2. **Run Database Migrations**:
+  After the services are up and running, execute the following command to run the database migrations:
+  ```sh
+  docker compose exec -it app npm run prisma:migrate
+  ```
+
+3. **Seed the Database**:
+  To seed the database with initial data, run the following command:
+  ```sh
+  docker compose exec -it app npm run prisma:seed
+  ```
