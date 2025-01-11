@@ -4,6 +4,7 @@ import { PrismaService } from '../prisma.service';
 import { ItemType } from '@prisma/client';
 import { GetNonInfectedReportResponse } from './dto/get-non-infected-report-response.dto';
 import { GetInfectedReportResponse } from './dto/get-infected-report-response.dto';
+import { GetAverageResourcesReportResponse } from './dto/get-average-resources-report-response.dto';
 
 @Injectable()
 export class ReportService {
@@ -91,30 +92,34 @@ export class ReportService {
     };
   }
 
-  // Get average amount of each resource by survivor
-  async getAverageResourceAmount(): Promise<any> {
+  // Get average allocation of each resource by survivor
+  async getAverageResourcesAllocation(): Promise<GetAverageResourcesReportResponse> {
     const resources = ['WATER', 'FOOD', 'MEDICATION', 'CVIRUS_VACCINE'];
-
-    const averageResources = await Promise.all(
+    const resourceAllocations = await Promise.all(
       resources.map(async (resource) => {
-        const totalResourceQuantity = await this.prisma.inventory.aggregate({
+        const totalResource = await this.prisma.inventory.aggregate({
           _sum: { quantity: true },
-          where: {
-            item: { type: resource as ItemType },
-          },
+          where: { item: { type: resource as ItemType } },
         });
 
         const totalSurvivors = await this.prisma.survivor.count();
+
+        const average = totalSurvivors
+          ? totalResource._sum.quantity / totalSurvivors
+          : 0;
+
+        const consumptionPerDay = 1; // Assume each survivor consumes 1 unit of each resource per day
+        const daysWorth = average ? Math.floor(average / consumptionPerDay) : 0;
         return {
           resource,
-          average:
-            totalSurvivors === 0 || !totalResourceQuantity._sum.quantity
-              ? 0
-              : totalResourceQuantity._sum.quantity / totalSurvivors,
+          average,
+          daysWorth,
         };
       }),
     );
 
-    return averageResources;
+    return {
+      data: resourceAllocations,
+    };
   }
 }

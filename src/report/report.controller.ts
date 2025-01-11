@@ -18,9 +18,9 @@ export class ReportController {
     return this.reportService.getNonInfectedReport();
   }
 
-  // Get average amount of each resource by survivor
-  @Get('average-resources')
-  getAverageResourceAmount() {
-    return this.reportService.getAverageResourceAmount();
+  // Get average resources allocation
+  @Get('average-resources-allocation')
+  getAverageResourcesAllocation() {
+    return this.reportService.getAverageResourcesAllocation();
   }
 }
