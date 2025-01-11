@@ -6,17 +6,19 @@ describe('ReportController', () => {
   let reportController: ReportController;
   let reportService: ReportService;
 
+  const mockReportService = {
+    getInfectedReport: jest.fn(),
+    getNonInfectedReport: jest.fn(),
+    getAverageResourcesAllocation: jest.fn(),
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [ReportController],
       providers: [
         {
           provide: ReportService,
-          useValue: {
-            getInfectedPercentage: jest.fn(),
-            getNonInfectedPercentage: jest.fn(),
-            getAverageResourceAmount: jest.fn(),
-          },
+          useValue: mockReportService,
         },
       ],
     }).compile();
@@ -25,38 +27,40 @@ describe('ReportController', () => {
     reportService = module.get<ReportService>(ReportService);
   });
 
-  describe('getInfectedPercentage', () => {
-    it('should return the infected percentage', async () => {
-      const result = 35;
-      jest
-        .spyOn(reportService, 'getInfectedPercentage')
-        .mockResolvedValue(result);
+  it('should be defined', () => {
+    expect(reportController).toBeDefined();
+  });
 
-      expect(await reportController.getInfectedPercentage()).toBe(result);
+  describe('getInfectedReport', () => {
+    it('should call ReportService.getInfectedReport and return the result', async () => {
+      const result = { infected: 50 };
+      mockReportService.getInfectedReport.mockReturnValue(result);
+
+      const response = reportController.getInfectedReport();
+      expect(reportService.getInfectedReport).toHaveBeenCalled();
+      expect(response).toEqual(result);
     });
   });
 
-  describe('getNonInfectedPercentage', () => {
-    it('should return the non-infected percentage', async () => {
-      const result = 65;
-      jest
-        .spyOn(reportService, 'getNonInfectedPercentage')
-        .mockResolvedValue(result);
+  describe('getNonInfectedReport', () => {
+    it('should call ReportService.getNonInfectedReport and return the result', async () => {
+      const result = { nonInfected: 50 };
+      mockReportService.getNonInfectedReport.mockReturnValue(result);
 
-      expect(await reportController.getNonInfectedPercentage()).toBe(result);
+      const response = reportController.getNonInfectedReport();
+      expect(reportService.getNonInfectedReport).toHaveBeenCalled();
+      expect(response).toEqual(result);
     });
   });
 
-  describe('getAverageResourceAmount', () => {
-    it('should return the average resource amount', async () => {
-      const result = {
-        averageResources: { water: 10, food: 5, medication: 2 },
-      };
-      jest
-        .spyOn(reportService, 'getAverageResourceAmount')
-        .mockResolvedValue(result);
+  describe('getAverageResourcesAllocation', () => {
+    it('should call ReportService.getAverageResourcesAllocation and return the result', async () => {
+      const result = { food: 10, water: 5 };
+      mockReportService.getAverageResourcesAllocation.mockReturnValue(result);
 
-      expect(await reportController.getAverageResourceAmount()).toBe(result);
+      const response = reportController.getAverageResourcesAllocation();
+      expect(reportService.getAverageResourcesAllocation).toHaveBeenCalled();
+      expect(response).toEqual(result);
     });
   });
 });
