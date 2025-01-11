@@ -6,16 +6,16 @@ import { ReportService } from './report.service';
 export class ReportController {
   constructor(private readonly reportService: ReportService) {}
 
-  // Get percentage of infected survivors
-  @Get('infected-percentage')
-  getInfectedPercentage() {
-    return this.reportService.getInfectedPercentage();
+  // Get report of infected survivors
+  @Get('infected')
+  getInfectedReport() {
+    return this.reportService.getInfectedReport();
   }
 
-  // Get percentage of non-infected survivors
-  @Get('non-infected-percentage')
-  getNonInfectedPercentage() {
-    return this.reportService.getNonInfectedPercentage();
+  // Get report of non-infected survivors
+  @Get('non-infected')
+  getNonInfectedReport() {
+    return this.reportService.getNonInfectedReport();
   }
 
   // Get average amount of each resource by survivor
